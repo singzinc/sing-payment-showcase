@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- %-5p|%d{ABSOLUTE}| %c{1}:%L - %m%n -->
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] - %m%n</pattern>
+		</encoder>
+	</appender>
+
+
+
+	<appender name="UTIL-OUT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>C:/sing/app/log/ctm_ws/util.log</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>C:/fwd/app/log/ctm_ws/util.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>  
+		</rollingPolicy>
+		<append>true</append>  
+	</appender>
+
+	<appender name="CONTROLLER-OUT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>C:/sing/app/log/ctm_ws/controller.log</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>C:/sing/app/log/ctm_ws/controller.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>  
+		</rollingPolicy>
+		<append>true</append>  
+	</appender>
+
+	<appender name="SERVICE-OUT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>C:/sing/app/log/ctm_ws/service.log</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%class:%line] - %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>C:/sing/app/log/ctm_ws/service.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>  
+		</rollingPolicy>
+		<append>true</append>  
+	</appender>
+
+
+
+	<logger name="com.sing.payment.controller" level="info"
+		additivity="false">
+		<appender-ref ref="CONTROLLER-OUT" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="com.sing.payment.service" level="info" additivity="false">
+		<appender-ref ref="SERVICE-OUT" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="com.sing.payment.util" level="info" additivity="false">
+		<appender-ref ref="UTIL-OUT" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
